@@ -9,6 +9,10 @@
   "author": "Asamaporn Chantarasakul",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.2"
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "express-validation": "^1.0.2",
+    "express-validator": "^5.0.2",
+    "mongojs": "^2.5.0"
   }
 }
