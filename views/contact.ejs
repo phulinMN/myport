@@ -29,15 +29,20 @@
 
     </div>
     <h1><%= title %></h1>
-    <form method="POST" action="/persons/add">
-        <label>First Name</label><br>
+    <form method="POST" action="/contact/add">
+        <label>ชื่อ</label>
         <input type="text" name="first_name">
-        <br>
-        <label>Last Name</label><br>
+        <label>นามสกุล</label>
         <input type="text" name="last_name">
         <br>
-        <label>Email</label><br>
+        <label>เบอร์มือถือ</label>
+        <input type="text" name="phone">
+        <br>
+        <label>Email</label>
         <input type="text" name="email">
+        <br>
+        <label>รายละเอียด</label><br>
+        <input type="text" name="description">
         <br><br>
         <input type="submit" value="Submit">
     </form>

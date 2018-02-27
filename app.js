@@ -88,7 +88,7 @@ app.get('/contact', function(req, res){
     })
 });
 
-app.post('/contact/persons/add', function(req, res) {
+app.post('/contact/add', function(req, res) {
     req.checkBody('first_name', 'First Name is Required').notEmpty();
     req.checkBody('last_name', 'Last Name is Required').notEmpty();
     req.checkBody('email', 'Email is Required').notEmpty();
@@ -106,13 +106,15 @@ app.post('/contact/persons/add', function(req, res) {
         var newPerson = {
             first_name: req.body.first_name,
             last_name: req.body.last_name,
-            email: req.body.email
+            phone: req.body.phone,
+            email: req.body.email,
+            description: req.body.description
         }
         db.persons.insert(newPerson, function(err, result){
             if(err) {
                 console.log(err);
             }
-            res.redirect('/');
+            res.redirect('/contact');
         });
     }
 });
