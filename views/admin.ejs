@@ -33,6 +33,7 @@
                     <th>Email</th>
                     <th>phone</th>
                     <th>Description</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -43,6 +44,7 @@
                 <td><%= person.email %></td>
                 <td><%= person.phone %></td>
                 <td><%= person.description %></td>
+                <td><a href="/admin" class="deleteContact" data-id="<%= person._id %>">DELETE</a></td>
                 </tr>
                 <% }) %>
             </tbody>

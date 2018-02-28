@@ -4,6 +4,7 @@ var path = require('path');
 var expressValidator = require('express-validator');
 var mongojs = require('mongojs');
 var db = mongojs('portdb', ['persons']);
+var ObjectId = mongojs.ObjectId;
 
 var app = express();
 
@@ -132,6 +133,15 @@ app.post('/contact/add', function(req, res) {
     }
 });
 
+app.delete('/admin/delete/:id', function(req, res) {
+    console.log(req.params.id);
+    db.persons.remove({_id: ObjectId(req.params.id)}, function(err, result){
+        if(err){
+            console.log(err);
+        }
+        res.redirect('/admin');
+    });
+});
 
 
 app.listen(3000, function(){
