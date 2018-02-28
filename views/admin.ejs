@@ -1,5 +1,5 @@
 <% include partials/header %>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -24,33 +24,28 @@
         </ul>
         </div>
     </nav>
-    <!-- Form Contact -->
-    <div>
 
-    </div>
-    <h1><%= title %></h1>
-    <% if(errors){ %>
-        <ul>
-        <% errors.forEach(function(error) { %>
-            <li><%= error.msg %></li>
-        <% }) %>
-        </ul>
-    <% } %>
-    <form method="POST" action="/contact/add">
-        <label>ชื่อ</label>
-        <input type="text" name="first_name">
-        <label>นามสกุล</label>
-        <input type="text" name="last_name">
-        <br>
-        <label>เบอร์มือถือ</label>
-        <input type="text" name="phone">
-        <br>
-        <label>Email</label>
-        <input type="text" name="email">
-        <br>
-        <label>รายละเอียด</label><br>
-        <input type="text" name="description">
-        <br><br>
-        <input type="submit" value="Submit">
-    </form>
+    <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Email</th>
+                    <th>phone</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% persons.forEach(function(person) { %>
+                <tr>
+                <td><%= person.first_name %></td>
+                <td><%= person.last_name %></td>
+                <td><%= person.email %></td>
+                <td><%= person.phone %></td>
+                <td><%= person.description %></td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+
 <% include partials/footer %>  

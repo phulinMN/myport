@@ -80,27 +80,40 @@ app.get('/activity', function(req, res){
 
 app.get('/contact', function(req, res){
     db.persons.find(function (err, docs) {
-        // console.log(docs);
+        console.log(req.query.errors);
         res.render('contact', {
             title: 'Contact',
+            persons: docs
+            // errors: req.query.errors
+        });
+    })
+});
+
+app.get('/admin', function(req, res){
+    db.persons.find(function (err, docs) {
+        console.log(req.query.errors);
+        res.render('admin', {
             persons: docs
         });
     })
 });
 
 app.post('/contact/add', function(req, res) {
+
     req.checkBody('first_name', 'First Name is Required').notEmpty();
     req.checkBody('last_name', 'Last Name is Required').notEmpty();
+    req.checkBody('phone', 'Phone is Required').notEmpty();
     req.checkBody('email', 'Email is Required').notEmpty();
 
     var errors = req.validationErrors();
     if(errors) {
-        res.render('index', {
-            title: 'Contact',
-            persons: persons,
-            errors: errors
+        db.persons.find(function (err, docs) {
+            res.render('contact', {
+                title: 'Contact',
+                persons: docs,
+                errors: errors
+            });
         });
-        console.log('ERRORS');
     }
     else {
         var newPerson = {
