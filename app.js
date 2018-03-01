@@ -44,39 +44,30 @@ app.use(expressValidator({
 
 // HOMEPAGE
 app.get('/', function(req, res){
-    db.persons.find(function (err, docs) {
-        // console.log(docs);
-        res.render('index', {
-            title: 'HOME'
-        });
-    })
+    res.render('index', {
+        title: 'HOME'
+    });
 });
 
 app.get('/about', function(req, res){
-    db.persons.find(function (err, docs) {
-        // console.log(docs);
-        res.render('about', {
-            title: 'About me'
-        });
-    })
+    res.render('about', {
+        title: 'About me'
+    });
 });
 
 app.get('/skill', function(req, res){
-    db.persons.find(function (err, docs) {
-        // console.log(docs);
-        res.render('skill', {
-            title: 'Skill'
-        });
-    })
+    res.render('skill', {
+        title: 'Skill'
+    });
 });
 
 app.get('/activity', function(req, res){
-    db.persons.find(function (err, docs) {
-        // console.log(docs);
+    db.activities.find(function (err, acts) {
         res.render('activity', {
-            title: 'Activity'
+            title: "Activity",
+            activities: acts
         });
-    })
+    });
 });
 
 app.get('/contact', function(req, res){
@@ -85,18 +76,58 @@ app.get('/contact', function(req, res){
         res.render('contact', {
             title: 'Contact',
             persons: docs
-            // errors: req.query.errors
         });
     })
 });
 
 app.get('/admin', function(req, res){
-    db.persons.find(function (err, docs) {
-        console.log(req.query.errors);
-        res.render('admin', {
-            persons: docs
+    db.activities.find(function (err, acts) {
+        db.persons.find(function (err, docs) {
+            // console.log(req.query.errors);
+            res.render('admin', {
+                persons: docs,
+                activities: acts
+            });
         });
-    })
+    });
+});
+
+app.get('/admin/act', function(req, res) {
+    // console.log(res.body.res);
+    db.activitydb.find(function (err, docs) {
+        res.render('create-act',{
+            activities: activities
+        });
+    });
+    // res.redirect('/admin/#');
+});
+
+app.post('/admin/act-add', function(req, res) {
+    req.checkBody('activity_name', 'Activity is Required').notEmpty();
+    req.checkBody('detail', 'Detail is Required').notEmpty();
+    var errors = req.validationErrors();
+    if(errors) {
+        console.log("ERRORS");
+        db.activitydb.find(function (err, acts) {
+            res.render('create-act', {
+                title: 'Activity',
+                activities: acts,
+                errors: errors
+            });
+        });
+    }
+    else {
+        var newActivity = {
+            activity_name: req.body.activity_name,
+            detail: req.body.detail
+        }
+        db.activities.insert(newActivity, function(err, result){
+            if(err) {
+                console.log(err);
+            }
+            res.redirect('/admin');
+        });
+    }
 });
 
 app.post('/contact/add', function(req, res) {
@@ -105,6 +136,7 @@ app.post('/contact/add', function(req, res) {
     req.checkBody('last_name', 'Last Name is Required').notEmpty();
     req.checkBody('phone', 'Phone is Required').notEmpty();
     req.checkBody('email', 'Email is Required').notEmpty();
+    req.checkBody('description', 'Description is Required').notEmpty();
 
     var errors = req.validationErrors();
     if(errors) {

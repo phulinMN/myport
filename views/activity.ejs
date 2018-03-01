@@ -26,5 +26,12 @@
     </nav>
 
     <h1><%= title %></h1>
+
+    <ul>
+        <li>Activity - Detail</li>
+        <% activities.forEach(function(a) { %>
+        <li><%= a.activity_name %> - <%= a.detail %></li>
+        <% }) %>
+    </ul>
     
 <% include partials/footer %> 

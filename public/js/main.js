@@ -11,7 +11,6 @@ function deleteContact() {
         }).done(function(response) {
             window.location.replace('/admin');
         });
-        // alert(1);
     }
     else {
         return false;   
