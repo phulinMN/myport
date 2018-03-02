@@ -39,3 +39,7 @@ function editActivity(e) {
     alert("Change detected!");
     return false;
 }
+
+function lang() {
+    
+}

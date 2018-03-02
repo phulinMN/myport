@@ -25,29 +25,49 @@
         </div>
     </nav>
 
-    <h1><%= title %></h1>
-        <% if(errors){ %>
-            <ul>
-            <% errors.forEach(function(error) { %>
-                <li><%= error.msg %></li>
-            <% }) %>
-            </ul>
-        <% } %>
-        <form method="POST" action="/contact/add">
-            <label>ชื่อ</label>
-            <input type="text" name="first_name">
-            <label>นามสกุล</label>
-            <input type="text" name="last_name">
-            <br>
-            <label>เบอร์มือถือ</label>
-            <input type="text" name="phone">
-            <br>
-            <label>Email</label>
-            <input type="text" name="email">
-            <br>
-            <label>รายละเอียด</label><br>
-            <input type="text" name="description">
-            <br><br>
-            <input type="submit" value="Submit">
-        </form>
+    <div class="container">
+        <div class="row">
+            <div class="col col-md-6">
+                <h1><%= title %></h1>
+                <% if(errors){ %>
+                    <ul>
+                    <% errors.forEach(function(error) { %>
+                        <li><%= error.msg %></li>
+                    <% }) %>
+                    </ul>
+                <% } %>
+                <!-- <form> -->
+                <form method="POST" action="/contact/add">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label>ชื่อ*</label>
+                            <input type="text" class="form-control" name="first_name" placeholder="ชื่อ">
+                        </div>
+                        <div class="col-md-6">
+                            <label>นามสกุล*</label>
+                            <input type="text" class="form-control" name="last_name" placeholder="นามสกุล">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label>เบอร์มือถือ*</label>
+                            <input type="text" class="form-control" name="phone" placeholder="example: 099-999-9999">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Email*</label>
+                            <input type="text" class="form-control" name="email" placeholder="example: xxx@gmail.com">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <label>รายละเอียด*</label>
+                            <textarea type="text" class="form-control" rows="5" name="description"></textarea>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+        
 <% include partials/footer %> 
