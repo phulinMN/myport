@@ -112,7 +112,7 @@ app.get('/admin/edit-act', function(req, res) {
 
 app.post('/admin/edit', function(req, res) {
     console.log('ee');
-    res.redirect('/admin');
+    // res.redirect('/admin');
 });
 
 app.post('/admin/act-add', function(req, res) {
@@ -196,7 +196,6 @@ app.delete('/admin/delete/:id', function(req, res) {
         if(err){
             console.log(err);
         }
-        console.log("------");
         res.redirect('/admin/#');
     });
 });

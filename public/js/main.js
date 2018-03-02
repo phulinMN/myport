@@ -1,15 +1,8 @@
 $(document).ready(function() {
     $('.deleteContact').on('click', deleteContact);
-});
-
-$(document).ready(function() {
     $('.deleteActivity').on('click', deleteActivity);
+    $('.editActivity').on('click', editActivity);
 });
-
-$("#textbox").change(function() {
-    alert("Change detected!");
-});
-
 
 function deleteContact() {
     var confirmation = confirm('Are you sure ?');
@@ -39,4 +32,10 @@ function deleteActivity() {
     else {
         return false;   
     }
+}
+
+function editActivity(e) {
+    e.preventDefault();
+    alert("Change detected!");
+    return false;
 }
