@@ -24,14 +24,16 @@
         </ul>
         </div>
     </nav>
+
+    <!-- <%= activities %> -->
     <h3>Activity</h3>
     <a href="/admin/act">create activity</a>
-    <!-- <%= activities %> -->
     <table class="table table-hover">
         <thead>
             <tr>
                 <th>Activity</th>
                 <th>Detail</th>
+                <th></th>
                 <th></th>
             </tr>
         </thead>
@@ -40,12 +42,13 @@
             <tr>
             <td><%= a.activity_name %></td>
             <td><%= a.detail %></td>
-            <td><a href="/admin/#">DELETE</a></td>
+            <td><a href="/admin/edit-act"><%= a._id %> EDIT</a></td>
+            <td><a href="/admin" class="deleteActivity" data-id="<%= a._id %>">DELETE</a></td>
             </tr>
             <% }) %>
         </tbody>
     </table>
-
+    <!-- Contact -->
     <br><br><br><br><br>
     <h3>Contact</h3>
     <table class="table table-hover">

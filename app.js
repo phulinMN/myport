@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var expressValidator = require('express-validator');
 var mongojs = require('mongojs');
-var db = mongojs('portdb', ['persons']);
+var db = mongojs('portdb', ['persons','activitydb']);
 var ObjectId = mongojs.ObjectId;
 
 var app = express();
@@ -62,7 +62,7 @@ app.get('/skill', function(req, res){
 });
 
 app.get('/activity', function(req, res){
-    db.activities.find(function (err, acts) {
+    db.activitydb.find(function (err, acts) {
         res.render('activity', {
             title: "Activity",
             activities: acts
@@ -81,8 +81,9 @@ app.get('/contact', function(req, res){
 });
 
 app.get('/admin', function(req, res){
-    db.activities.find(function (err, acts) {
+    db.activitydb.find(function (err, acts) {
         db.persons.find(function (err, docs) {
+            // console.log(acts)
             // console.log(req.query.errors);
             res.render('admin', {
                 persons: docs,
@@ -96,10 +97,21 @@ app.get('/admin/act', function(req, res) {
     // console.log(res.body.res);
     db.activitydb.find(function (err, docs) {
         res.render('create-act',{
-            activities: activities
+            activities: docs
         });
     });
-    // res.redirect('/admin/#');
+});
+app.get('/admin/edit-act', function(req, res) {
+    db.activitydb.find(function (err, docs) {
+        res.render('edit-act',{
+            activities: docs
+        });
+    });
+});
+
+app.post('/admin/edit', function(req, res) {
+    console.log('ee');
+    res.redirect('/admin');
 });
 
 app.post('/admin/act-add', function(req, res) {
@@ -121,7 +133,7 @@ app.post('/admin/act-add', function(req, res) {
             activity_name: req.body.activity_name,
             detail: req.body.detail
         }
-        db.activities.insert(newActivity, function(err, result){
+        db.activitydb.insert(newActivity, function(err, result){
             if(err) {
                 console.log(err);
             }
@@ -129,6 +141,7 @@ app.post('/admin/act-add', function(req, res) {
         });
     }
 });
+
 
 app.post('/contact/add', function(req, res) {
 
@@ -165,13 +178,25 @@ app.post('/contact/add', function(req, res) {
     }
 });
 
-app.delete('/admin/delete/:id', function(req, res) {
+app.delete('/admin/contact-delete/:id', function(req, res) {
     console.log(req.params.id);
     db.persons.remove({_id: ObjectId(req.params.id)}, function(err, result){
         if(err){
             console.log(err);
         }
+        console.log("########");
         res.redirect('/admin');
+    });
+});
+
+app.delete('/admin/delete/:id', function(req, res) {
+    console.log(req.params.id);
+    db.activitydb.remove({_id: ObjectId(req.params.id)}, function(err, result){
+        if(err){
+            console.log(err);
+        }
+        console.log("------");
+        res.redirect('/admin/#');
     });
 });
 
