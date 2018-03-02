@@ -4,7 +4,7 @@ var path = require('path');
 var expressValidator = require('express-validator');
 var mongojs = require('mongojs');
 // var db = mongojs('portdb', ['persons','activitydb']);
-var db = mongojs('mongodb://heroku_c6c62hmt:u02leonkjcp3kqjq4rdnuncbco@ds153958.mlab.com:53958/heroku_c6c62hmt' || 'portdb', ['persons','activitydb']);
+var db = mongojs(process.env.MONGODB_URI || 'portdb', ['persons','activitydb']);
 var ObjectId = mongojs.ObjectId;
 
 var app = express();
