@@ -110,7 +110,7 @@ app.get('/admin/edit-act/:id', function(req, res) {
     });
 });
 
-app.post('/admin/edit', function(req, res) {
+app.post('/admin/edit/:id', function(req, res) {
     console.log(req.body.activity_name);
     console.log(req.body.detail);
     console.log(req.params.id);
