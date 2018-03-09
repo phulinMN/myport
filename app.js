@@ -73,7 +73,6 @@ app.get('/activity', function(req, res){
 
 app.get('/contact', function(req, res){
     db.persons.find(function (err, docs) {
-        console.log(req.query.errors);
         res.render('contact', {
             title: 'Contact',
             persons: docs
@@ -102,8 +101,6 @@ app.get('/admin/act', function(req, res) {
 });
 app.get('/admin/edit-act/:id', function(req, res) {
     db.activitydb.findOne({_id: ObjectId(req.params.id)}, function (err, docs) {
-        console.log(req.params.id);
-        console.log(ObjectId(req.params.id));
         res.render('edit-act',{
             activities: docs
         });
@@ -111,10 +108,6 @@ app.get('/admin/edit-act/:id', function(req, res) {
 });
 
 app.post('/admin/edit/:id', function(req, res) {
-    console.log(req.body.activity_name);
-    console.log(req.body.detail);
-    console.log(req.params.id);
-    console.log(ObjectId(req.params.id));
     req.checkBody('activity_name', 'Activity is Required').notEmpty();
     req.checkBody('detail', 'Detail is Required').notEmpty();
     var errors = req.validationErrors();
@@ -169,11 +162,11 @@ app.post('/admin/act-add', function(req, res) {
 
 app.post('/contact/add', function(req, res) {
 
-    req.checkBody('first_name', 'First Name is Required').notEmpty();
-    req.checkBody('last_name', 'Last Name is Required').notEmpty();
-    req.checkBody('phone', 'Phone is Required').notEmpty();
-    req.checkBody('email', 'Email is Required').notEmpty();
-    req.checkBody('description', 'Description is Required').notEmpty();
+    req.checkBody('first_name', 'กรุณากรอกชื่อ').notEmpty();
+    req.checkBody('last_name', 'กรุณากรอกนามสกุล').notEmpty();
+    req.checkBody('phone', 'กรุณากรอกเบอร์โทรศัพท์').notEmpty() || req.checkBody('phone', 'เบอร์โทรศัพท์ไม่ถูกต้อง').isMobilePhone('th-TH');
+    req.checkBody('email', 'กรุณากรอกอีเมล์').notEmpty() || req.checkBody('email', 'รูปแบบอีเมล์ไม่ถูกต้อง').isEmail();
+    req.checkBody('description', 'กรุณากรอกรายละเอียด').notEmpty();
 
     var errors = req.validationErrors();
     if(errors) {
@@ -208,7 +201,6 @@ app.delete('/admin/contact-delete/:id', function(req, res) {
         if(err){
             console.log(err);
         }
-        // console.log("########");
         res.redirect('/admin');
     });
 });
