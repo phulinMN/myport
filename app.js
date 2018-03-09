@@ -95,7 +95,8 @@ app.get('/admin', function(req, res){
 app.get('/admin/act', function(req, res) {
     db.activitydb.find(function (err, docs) {
         res.render('create-act',{
-            activities: docs
+            activities: docs,
+            updateAct: null
         });
     });
 });
@@ -104,16 +105,16 @@ app.get('/admin/edit-act/:id', function(req, res) {
         console.log(req.params.id);
         console.log(ObjectId(req.params.id));
         res.render('edit-act',{
-            activities: docs,
-            update: docs
+            activities: docs
         });
     });
 });
 
-app.post('/admin/edit-act', function(req, res) {
+app.post('/admin/edit', function(req, res) {
     console.log(req.body.activity_name);
     console.log(req.body.detail);
     console.log(req.params.id);
+    console.log(ObjectId(req.params.id));
     req.checkBody('activity_name', 'Activity is Required').notEmpty();
     req.checkBody('detail', 'Detail is Required').notEmpty();
     var errors = req.validationErrors();
@@ -127,9 +128,7 @@ app.post('/admin/edit-act', function(req, res) {
         });
     }
     else {
-        console.log(ObjectId(req.params.id) + "****");
-        console.log(req.params.id + "-----");
-        db.activitydb.update({_id: ObjectId(req.params.id)}, {activity_name: req.body.activity_name, detail: req.body.detail}, function(err, result){
+        db.activitydb.update({_id: ObjectId(req.params.id)}, {_id: ObjectId(req.params.id),activity_name: req.body.activity_name, detail: req.body.detail}, function(err, result){
             if(err) {
                 console.log(err);
             }
@@ -209,7 +208,7 @@ app.delete('/admin/contact-delete/:id', function(req, res) {
         if(err){
             console.log(err);
         }
-        console.log("########");
+        // console.log("########");
         res.redirect('/admin');
     });
 });

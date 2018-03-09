@@ -1,7 +1,6 @@
 $(document).ready(function() {
     $('.deleteContact').on('click', deleteContact);
     $('.deleteActivity').on('click', deleteActivity);
-    $('.editActivity').on('click', editActivity);
 });
 
 function deleteContact() {
@@ -28,16 +27,6 @@ function deleteActivity() {
         }).done(function(response) {
             window.location.replace('/admin');
         });
-    }
-    else {
-        return false;   
-    }
-}
-
-function editActivity() {
-    var confirmation = confirm('Are you sure ?');
-    if(confirmation) {
-        
     }
     else {
         return false;   

@@ -11,8 +11,9 @@
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <h3>แก้ไขผลงาน</h3>
-                <form method="POST" action="/admin/edit-act">
+                <form method="POST" action="/admin/edit">
                     <div class="form-group row">
+                        <%= activities._id %>
                         <label class="col-sm-10 col-form-label">ชื่อผลงาน</label>
                         <div class="col-sm-12">
                             <input type="text" class="form-control" name="activity_name" value="<%= activities.activity_name %>">
