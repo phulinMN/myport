@@ -1,6 +1,21 @@
+html, body, div, table, p, span, h1, h2, h3, h4, h5, li {
+    font-family: 'Quicksand','Kanit', sans-serif;
+}
+
 img {
     max-width: 100%;
     max-height: 100%;
+}
+h3 {
+    text-align: center;
+}
+
+.blog-footer {
+    padding: 0.5rem 0;
+    color: #999;
+    text-align: center;
+    background-color: #333333;
+    border-top: .05rem solid #e5e5e5;
 }
 
 .portrait {

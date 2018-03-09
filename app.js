@@ -84,8 +84,6 @@ app.get('/contact', function(req, res){
 app.get('/admin', function(req, res){
     db.activitydb.find(function (err, acts) {
         db.persons.find(function (err, docs) {
-            // console.log(acts)
-            // console.log(req.query.errors);
             res.render('admin', {
                 persons: docs,
                 activities: acts
@@ -95,25 +93,51 @@ app.get('/admin', function(req, res){
 });
 
 app.get('/admin/act', function(req, res) {
-    // console.log(res.body.res);
     db.activitydb.find(function (err, docs) {
         res.render('create-act',{
             activities: docs
         });
     });
 });
-app.get('/admin/edit-act', function(req, res) {
-    db.activitydb.find(function (err, docs) {
+app.get('/admin/edit-act/:id', function(req, res) {
+    db.activitydb.findOne({_id: ObjectId(req.params.id)}, function (err, docs) {
+        console.log(req.params.id);
+        console.log(ObjectId(req.params.id));
         res.render('edit-act',{
-            activities: docs
+            activities: docs,
+            update: docs
         });
     });
 });
 
-app.post('/admin/edit', function(req, res) {
-    console.log('ee');
-    // res.redirect('/admin');
+app.post('/admin/edit-act', function(req, res) {
+    console.log(req.body.activity_name);
+    console.log(req.body.detail);
+    console.log(req.params.id);
+    req.checkBody('activity_name', 'Activity is Required').notEmpty();
+    req.checkBody('detail', 'Detail is Required').notEmpty();
+    var errors = req.validationErrors();
+    if(errors) {
+        console.log("ERRORS");
+        db.activitydb.find(function (err, acts) {
+            res.render('edit-act', {
+                activities: acts,
+                errors: errors
+            });
+        });
+    }
+    else {
+        console.log(ObjectId(req.params.id) + "****");
+        console.log(req.params.id + "-----");
+        db.activitydb.update({_id: ObjectId(req.params.id)}, {activity_name: req.body.activity_name, detail: req.body.detail}, function(err, result){
+            if(err) {
+                console.log(err);
+            }
+            res.redirect('/admin');
+        });
+    }
 });
+
 
 app.post('/admin/act-add', function(req, res) {
     req.checkBody('activity_name', 'Activity is Required').notEmpty();

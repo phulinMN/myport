@@ -34,12 +34,12 @@ function deleteActivity() {
     }
 }
 
-function editActivity(e) {
-    e.preventDefault();
-    alert("Change detected!");
-    return false;
-}
-
-function lang() {
-    
+function editActivity() {
+    var confirmation = confirm('Are you sure ?');
+    if(confirmation) {
+        
+    }
+    else {
+        return false;   
+    }
 }
