@@ -2,6 +2,9 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 var expressValidator = require('express-validator');
+var isThai = function(text) {
+    return /^[ก-๙]+$/ig.test(text);
+}
 var mongojs = require('mongojs');
 // var db = mongojs('portdb', ['persons','activitydb']);
 var db = mongojs(process.env.MONGODB_URI || 'portdb', ['persons','activitydb']);
@@ -162,14 +165,19 @@ app.post('/admin/act-add', function(req, res) {
 
 app.post('/contact/add', function(req, res) {
 
-    req.checkBody('first_name', 'กรุณากรอกชื่อ').notEmpty();
-    req.checkBody('last_name', 'กรุณากรอกนามสกุล').notEmpty();
+    req.checkBody('first_name').notEmpty();
+    req.checkBody('last_name').notEmpty();
     req.checkBody('phone', 'กรุณากรอกเบอร์โทรศัพท์').notEmpty() || req.checkBody('phone', 'เบอร์โทรศัพท์ไม่ถูกต้อง').isMobilePhone('th-TH');
     req.checkBody('email', 'กรุณากรอกอีเมล์').notEmpty() || req.checkBody('email', 'รูปแบบอีเมล์ไม่ถูกต้อง').isEmail();
     req.checkBody('description', 'กรุณากรอกรายละเอียด').notEmpty();
-
     var errors = req.validationErrors();
     if(errors) {
+        if (!isThai(req.body.first_name)) {
+            errors[0].msg = 'กรุณากรอกชื่อเป็นภาษาไทย';
+        }
+        if (!isThai(req.body.last_name)) {
+            errors[1].msg = 'กรุณากรอกนามสกุลเป็นภาษาไทย';
+        }
         db.persons.find(function (err, docs) {
             res.render('contact', {
                 title: 'Contact',
