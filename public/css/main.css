@@ -34,7 +34,7 @@ h3 {
 }
 
 .blog-footer {
-    bottom: 0px;
+    /* bottom: 0; */
     /* position: absolute; */
     width: 100%;
 }

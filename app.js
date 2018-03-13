@@ -165,21 +165,23 @@ app.post('/admin/act-add', function(req, res) {
 
 app.post('/contact/add', function(req, res) {
 
-
-    req.checkBody('first_name').notEmpty();
-    req.checkBody('last_name').notEmpty();
-    req.checkBody('phone', 'กรุณากรอกเบอร์โทรศัพท์').notEmpty()
-    req.checkBody('email', 'กรุณากรอกอีเมล์').notEmpty()
+    req.checkBody('phone', 'กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง').isMobilePhone('th-TH');
+    req.checkBody('email', 'กรุณากรอกอีเมล์ให้ถูกต้อง').isEmail();
     req.checkBody('description', 'กรุณากรอกรายละเอียด').notEmpty();
     var errors = req.validationErrors();
     if(errors) {
-        req.checkBody('email', 'รูปแบบอีเมล์ไม่ถูกต้อง').isEmail();
-        req.checkBody('phone', 'เบอร์โทรศัพท์ไม่ถูกต้อง').isMobilePhone('th-TH');
+        console.log(errors);
         if (!isThai(req.body.first_name)) {
-            errors[0].msg = 'กรุณากรอกชื่อเป็นภาษาไทย';
+            errors.push({
+                param: 'first_name',
+                msg: 'กรุณากรอกชื่อเป็นภาษาไทย'
+            })
         }
         if (!isThai(req.body.last_name)) {
-            errors[1].msg = 'กรุณากรอกนามสกุลเป็นภาษาไทย';
+            errors.push({
+                param: 'last_name',
+                msg: 'กรุณากรอกนามสกุลเป็นภาษาไทย'
+            })
         }
         db.persons.find(function (err, docs) {
             res.render('contact', {
